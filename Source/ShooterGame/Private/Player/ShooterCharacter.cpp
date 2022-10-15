@@ -65,8 +65,8 @@ AShooterCharacter::AShooterCharacter(const FObjectInitializer& ObjectInitializer
 	bWantsToFire = false;
 	LowHealthPercentage = 0.5f;
 
-	BaseTurnRate = 45.f;
-	BaseLookUpRate = 45.f;
+	BaseTurnRate = 25.f;
+	BaseLookUpRate = 25.f;
 }
 
 void AShooterCharacter::PostInitializeComponents()

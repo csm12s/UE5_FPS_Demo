@@ -25,6 +25,9 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category=Effects)
 	UParticleSystemComponent* PickupPSC;
 
+	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
+	USkeletalMeshComponent* PickupMesh;
+
 protected:
 	/** FX of active pickup */
 	UPROPERTY(EditDefaultsOnly, Category=Effects)

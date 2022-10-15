@@ -19,6 +19,19 @@ AShooterPickup::AShooterPickup(const FObjectInitializer& ObjectInitializer) : Su
 	PickupPSC->bAutoDestroy = false;
 	PickupPSC->SetupAttachment(RootComponent);
 
+	PickupMesh = ObjectInitializer.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("PickupMesh"));
+	PickupMesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::OnlyTickPoseWhenRendered;
+	PickupMesh->bReceivesDecals = false;
+	PickupMesh->CastShadow = true;
+	PickupMesh->SetCollisionObjectType(ECC_WorldDynamic);
+	PickupMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	PickupMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+	PickupMesh->SetCollisionResponseToChannel(COLLISION_WEAPON, ECR_Block);
+	PickupMesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	PickupMesh->SetCollisionResponseToChannel(COLLISION_PROJECTILE, ECR_Block);
+	PickupMesh->SetupAttachment(RootComponent);
+
+
 	RespawnTime = 10.0f;
 	bIsActive = false;
 	PickedUpBy = NULL;
@@ -100,10 +113,12 @@ void AShooterPickup::OnPickedUp()
 	{
 		PickupPSC->SetTemplate(RespawningFX);
 		PickupPSC->ActivateSystem();
+		PickupMesh->SetVisibility(true);
 	}
 	else
 	{
 		PickupPSC->DeactivateSystem();
+		PickupMesh->SetVisibility(false);
 	}
 
 	if (PickupSound && PickedUpBy)
@@ -120,10 +135,12 @@ void AShooterPickup::OnRespawned()
 	{
 		PickupPSC->SetTemplate(ActiveFX);
 		PickupPSC->ActivateSystem();
+		PickupMesh->SetVisibility(true);
 	}
 	else
 	{
 		PickupPSC->DeactivateSystem();
+		PickupMesh->SetVisibility(false);
 	}
 
 	const bool bJustSpawned = CreationTime <= (GetWorld()->GetTimeSeconds() + 5.0f);
