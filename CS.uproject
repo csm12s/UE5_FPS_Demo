@@ -7,12 +7,18 @@
 		{
 			"Name": "ShooterGame",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		},
 		{
 			"Name": "ShooterGameLoadingScreen",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
@@ -48,7 +54,7 @@
 		{
 			"Name": "OnlineSubsystemPS4",
 			"Enabled": true,
-			"WhitelistPlatforms": [
+			"PlatformAllowList": [
 				"PS4"
 			],
 			"SupportedTargetPlatforms": [
@@ -58,7 +64,7 @@
 		{
 			"Name": "OnlineSubsystemLive",
 			"Enabled": true,
-			"WhitelistPlatforms": [
+			"PlatformAllowList": [
 				"XboxOne"
 			],
 			"SupportedTargetPlatforms": [

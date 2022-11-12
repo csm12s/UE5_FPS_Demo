@@ -876,6 +876,7 @@ void AShooterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 	PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, this, &AShooterCharacter::OnNextWeapon);
 	PlayerInputComponent->BindAction("PrevWeapon", IE_Pressed, this, &AShooterCharacter::OnPrevWeapon);
+	PlayerInputComponent->BindAction("Throw", IE_Pressed, this, &AShooterCharacter::OnDropWeapon);
 
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AShooterCharacter::OnReload);
 
@@ -1029,6 +1030,22 @@ void AShooterCharacter::OnPrevWeapon()
 			const int32 CurrentWeaponIdx = Inventory.IndexOfByKey(CurrentWeapon);
 			AShooterWeapon* PrevWeapon = Inventory[(CurrentWeaponIdx - 1 + Inventory.Num()) % Inventory.Num()];
 			EquipWeapon(PrevWeapon);
+		}
+	}
+}
+
+void AShooterCharacter::OnDropWeapon()
+{
+	AShooterPlayerController* MyPC = Cast<AShooterPlayerController>(Controller);
+	if (MyPC && MyPC->IsGameInputAllowed())
+	{
+		if (CurrentWeapon && GetInventoryCount() >= 2)
+		{
+			const int32 CurrentWeaponIdx = Inventory.IndexOfByKey(CurrentWeapon);
+			AShooterWeapon* NextWeapon = Inventory[(CurrentWeaponIdx + 1) % Inventory.Num()];
+
+			RemoveWeapon(CurrentWeapon);
+			EquipWeapon(NextWeapon);
 		}
 	}
 }

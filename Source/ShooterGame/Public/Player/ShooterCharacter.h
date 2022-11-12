@@ -185,6 +185,8 @@ class AShooterCharacter : public ACharacter
 	/** player pressed prev weapon action */
 	void OnPrevWeapon();
 
+	void OnDropWeapon();
+
 	/** player pressed reload action */
 	void OnReload();
 
