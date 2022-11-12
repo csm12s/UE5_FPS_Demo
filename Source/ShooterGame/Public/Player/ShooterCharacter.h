@@ -171,6 +171,8 @@ class AShooterCharacter : public ACharacter
 	/** player released start fire action */
 	void OnStopFire();
 
+	void OnAim();
+
 	/** player pressed targeting action */
 	void OnStartTargeting();
 
@@ -230,7 +232,7 @@ class AShooterCharacter : public ACharacter
 	*/
 	class AShooterWeapon* GetInventoryWeapon(int32 index) const;
 
-	/** get weapon taget modifier speed	*/
+	/** get weapon target modifier speed	*/
 	UFUNCTION(BlueprintCallable, Category = "Game|Weapon")
 	float GetTargetingSpeedModifier() const;
 

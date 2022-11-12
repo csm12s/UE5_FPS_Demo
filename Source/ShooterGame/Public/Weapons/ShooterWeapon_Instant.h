@@ -74,11 +74,11 @@ struct FInstantWeaponData
 	FInstantWeaponData()
 	{
 		WeaponSpread = 5.0f;
-		TargetingSpreadMod = 0.25f;
-		FiringSpreadIncrement = 1.0f;
-		FiringSpreadMax = 10.0f;
+		TargetingSpreadMod = 0.3f;//0.25
+		FiringSpreadIncrement = 0.6f;//1.0
+		FiringSpreadMax = 2.0f;//10
 		WeaponRange = 10000.0f;
-		HitDamage = 10;
+		HitDamage = 30;//10
 		DamageType = UDamageType::StaticClass();
 		ClientSideHitLeeway = 200.0f;
 		AllowedViewDotHitDir = 0.8f;

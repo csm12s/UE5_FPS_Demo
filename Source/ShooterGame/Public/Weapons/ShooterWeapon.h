@@ -63,8 +63,8 @@ struct FWeaponData
 	{
 		bInfiniteAmmo = false;
 		bInfiniteClip = false;
-		MaxAmmo = 100;
-		AmmoPerClip = 20;
+		MaxAmmo = 300;
+		AmmoPerClip = 30;
 		InitialClips = 4;
 		TimeBetweenShots = 0.2f;
 		NoAnimReloadDuration = 1.0f;

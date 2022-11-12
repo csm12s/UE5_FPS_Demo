@@ -854,10 +854,10 @@ void AShooterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAxis("MoveForward", this, &AShooterCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AShooterCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveUp", this, &AShooterCharacter::MoveUp);
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("TurnRate", this, &AShooterCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AShooterCharacter::LookUpAtRate);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	AShooterPlayerController* MyPC = Cast<AShooterPlayerController>(Controller);
 	if (MyPC->bAnalogFireTrigger)
@@ -870,6 +870,7 @@ void AShooterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 		PlayerInputComponent->BindAction("Fire", IE_Released, this, &AShooterCharacter::OnStopFire);
 	}
 
+	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AShooterCharacter::OnAim);
 	PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &AShooterCharacter::OnStartTargeting);
 	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &AShooterCharacter::OnStopTargeting);
 
@@ -966,16 +967,36 @@ void AShooterCharacter::OnStopFire()
 	StopWeaponFire();
 }
 
+void AShooterCharacter::OnAim()
+{
+	if (IsTargeting())
+	{
+		OnStopTargeting();
+	}
+	else
+	{
+		OnStartTargeting();
+	}
+}
+
 void AShooterCharacter::OnStartTargeting()
 {
 	AShooterPlayerController* MyPC = Cast<AShooterPlayerController>(Controller);
 	if (MyPC && MyPC->IsGameInputAllowed())
 	{
-		if (IsRunning())
+		// Check weapon state
+		if (CurrentWeapon)
 		{
-			SetRunning(false, false);
+			if (CurrentWeapon->GetCurrentState() == EWeaponState::Idle
+				|| CurrentWeapon->GetCurrentState() == EWeaponState::Firing)
+			{
+				if (IsRunning())
+				{
+					SetRunning(false, false);
+				}
+				SetTargeting(true);
+			}
 		}
-		SetTargeting(true);
 	}
 }
 

@@ -275,6 +275,7 @@ void AShooterWeapon::StartReload(bool bFromReplication)
 		
 		if (MyPawn && MyPawn->IsLocallyControlled())
 		{
+			MyPawn->SetTargeting(false);
 			PlayWeaponSound(ReloadSound);
 		}
 	}
