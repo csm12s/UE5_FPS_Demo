@@ -2,6 +2,7 @@
 
 #include "ShooterGame.h"
 #include "Weapons/ShooterWeapon.h"
+#include "Weapons/ShooterWeapon_Instant.h"
 #include "Weapons/ShooterDamageType.h"
 #include "UI/ShooterHUD.h"
 #include "Online/ShooterPlayerState.h"

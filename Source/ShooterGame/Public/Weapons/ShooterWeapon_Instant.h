@@ -46,9 +46,15 @@ struct FInstantWeaponData
 	UPROPERTY(EditDefaultsOnly, Category=Accuracy)
 	float FiringSpreadIncrement;
 
+	UPROPERTY(EditDefaultsOnly, Category=Accuracy)
+	float FiringAimUpIncrement;
+
 	/** continuous firing: max increment */
 	UPROPERTY(EditDefaultsOnly, Category=Accuracy)
 	float FiringSpreadMax;
+
+	UPROPERTY(EditDefaultsOnly, Category=Accuracy)
+	float FiringAimUpValueMax;
 
 	/** weapon range */
 	UPROPERTY(EditDefaultsOnly, Category=WeaponStat)
@@ -76,7 +82,9 @@ struct FInstantWeaponData
 		WeaponSpread = 5.0f;
 		TargetingSpreadMod = 0.3f;//0.25
 		FiringSpreadIncrement = 0.6f;//1.0
+		FiringAimUpIncrement = 2.f;
 		FiringSpreadMax = 2.0f;//10
+		FiringAimUpValueMax = 10.f;
 		WeaponRange = 10000.0f;
 		HitDamage = 30;//10
 		DamageType = UDamageType::StaticClass();
@@ -93,6 +101,7 @@ class AShooterWeapon_Instant : public AShooterWeapon
 
 	/** get current spread */
 	float GetCurrentSpread() const;
+	float GetCurrentSpreadIncrement() const;
 
 protected:
 
@@ -123,6 +132,7 @@ protected:
 
 	/** current spread from continuous firing */
 	float CurrentFiringSpread;
+	float CurrentAimUpValue;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Weapon usage
@@ -149,6 +159,11 @@ protected:
 
 	/** [local] weapon specific fire implementation */
 	virtual void FireWeapon() override;
+	virtual void AimUp();
+	virtual void StopAimUp();
+	FTimerHandle AimUpResetTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float AimUpResetPeriod;
 
 	/** [local + server] update spread on firing */
 	virtual void OnBurstFinished() override;
@@ -168,4 +183,7 @@ protected:
 
 	/** spawn trail effect */
 	void SpawnTrailEffect(const FVector& EndPoint);
+
+//public:
+	//FORCEINLINE float GetCurrentAimUpValue() { return CurrentAimUpValue; }
 };
