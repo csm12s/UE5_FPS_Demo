@@ -49,6 +49,7 @@ protected:
 	{
 		ESancturary,
 		EHighRise,
+		EIceWorld,
 		EMax,
 	};	
 
