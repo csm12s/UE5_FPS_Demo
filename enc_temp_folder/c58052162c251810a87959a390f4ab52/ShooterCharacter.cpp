@@ -994,6 +994,26 @@ void AShooterCharacter::OnSwitchView()
 
 	UpdatePawnMeshes();
 
+	const APlayerController* const Controller = Cast<APlayerController>(GetController());
+	
+	if (IsValid(Controller))
+	{
+		FVector location1P = Controller->PlayerCameraManager->GetCameraLocation();
+
+		FRotator ViewDir = GetControlRotation();
+		FRotator directionNew = ViewDir;
+
+		float CameraOffset = 600.0f;
+		FVector locationNew = location1P;
+
+		if (!bUseFirstPerson)
+		{
+			 locationNew -= directionNew.Vector() * CameraOffset;
+			 //directionNew
+		}
+
+		OnCameraUpdate(locationNew, directionNew);
+	}
 }
 
 void AShooterCharacter::OnStartTargeting()

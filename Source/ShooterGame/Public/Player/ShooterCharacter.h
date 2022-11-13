@@ -173,6 +173,8 @@ class AShooterCharacter : public ACharacter
 
 	void OnAim();
 
+	void OnSwitchView();
+
 	/** player pressed targeting action */
 	void OnStartTargeting();
 
@@ -258,6 +260,9 @@ class AShooterCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Mesh)
 	virtual bool IsFirstPerson() const;
 
+	UFUNCTION(BlueprintCallable, Category = Mesh)
+	virtual bool IsThirdPerson() const;
+
 	/** get max health */
 	int32 GetMaxHealth() const;
 
@@ -327,6 +332,8 @@ protected:
 
 	/** current firing state */
 	uint8 bWantsToFire : 1;
+
+	uint8 bUseFirstPerson : 1;
 
 	/** when low health effects should start */
 	float LowHealthPercentage;

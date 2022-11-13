@@ -194,9 +194,8 @@ void AShooterWeapon::AttachMeshToPawn()
 			USkeletalMeshComponent* PawnMesh1p = MyPawn->GetSpecifcPawnMesh(true);
 			USkeletalMeshComponent* PawnMesh3p = MyPawn->GetSpecifcPawnMesh(false);
 			Mesh1P->SetHiddenInGame( false );
-			Mesh1P->AttachToComponent(PawnMesh1p, FAttachmentTransformRules::KeepRelativeTransform, AttachPoint);
 			Mesh3P->SetHiddenInGame( false );
-			Mesh3P->bOwnerNoSee = true;
+			Mesh1P->AttachToComponent(PawnMesh1p, FAttachmentTransformRules::KeepRelativeTransform, AttachPoint);
 			Mesh3P->AttachToComponent(PawnMesh3p, FAttachmentTransformRules::KeepRelativeTransform, AttachPoint);
 		}
 		else if (MyPawn->IsThirdPerson())
@@ -204,6 +203,7 @@ void AShooterWeapon::AttachMeshToPawn()
 			USkeletalMeshComponent* PawnMesh3p = MyPawn->GetSpecifcPawnMesh(false);
 			Mesh3P->SetHiddenInGame(false);
 			Mesh3P->bOwnerNoSee = false;
+			Mesh3P->bOnlyOwnerSee = false;
 			Mesh3P->AttachToComponent(PawnMesh3p, FAttachmentTransformRules::KeepRelativeTransform, AttachPoint);
 		}
 		else // not controlled
